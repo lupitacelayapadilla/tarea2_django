@@ -1,0 +1,81 @@
+{% extends "shop/base.html" %}
+{% load static %}
+
+{% block title %}
+    Your order
+{% endblock %}
+
+{% block content %}
+    <h1>Your order</h1>
+    <a href="{% url 'full_cancel' %}" class="button light">Cancel full order</a>
+    <p>{{hours}}</p>
+    <p>{{date}}</p>
+    <p>
+    <table class="cart">
+        <thead>
+            <tr>
+                <th>Image</th>
+                <th>Product</th>
+                <th>Quantity</th>
+                <th>Remove</th>
+                <th>Unit price</th>                
+                <th>Price</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for product in products %}
+            
+            <tr>
+                <td>
+                    <a href="{{ product.get_absolute_url }}">
+                        <img src="{% if product.image %}{{ product.image.url }}{% else %}{% static "img/no_image.png" %}{% endif %}">
+                    </a>
+                </td>
+                <td>{{ product.name }}</td>
+                <td>
+                    {% for item in items  %}
+                        
+                        {% if item.id == product.id %}
+                            {{item.quantity}}
+                        {% endif %}
+                            
+                    {% endfor %}
+                </td>
+                <td>
+                    {% for item in items  %}
+                        {% if item.id == product.id %}
+                        <a href="{% url 'cancel_item' item.order_item %}">Cancel Product</a>
+                            
+                        {% endif %}
+                    {% endfor %}
+
+                    
+                </td>
+                <td class="num">${{ product.price }}</td>
+                <td class="num">
+                    {% for item in items  %}
+                        
+                        {% if item.id == product.id %}
+                           ${{item.subtotal}}
+                        {% endif %}
+                            
+                    {% endfor %}
+                           
+                </td>
+            </tr>
+          
+        {% endfor %}
+        
+        <tr class="total">
+            <td>Total</td>
+            <td colspan="4"></td>
+            <td class="num">${{ total }}</td>
+        </tr>
+        </tbody>
+    </table>
+    <p class="text-right">
+        <a href="" class="button light">Continue shopping</a>
+        
+    </p>
+   
+{% endblock %}
