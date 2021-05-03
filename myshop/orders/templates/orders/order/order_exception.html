@@ -1,0 +1,22 @@
+{% extends "shop/base.html" %}
+
+{% block title %}
+    Error
+{% endblock %}
+
+{% block content %}
+    <h1>An error has occurred</h1>
+    
+    <div>
+        
+        {% if type == 'no_order' %}
+            <p>You don't have orders.</p>
+        {% elif type == 'expired'%}
+           <p>The refund time for your last order has expired.</p>
+        {% endif %}
+    </div>
+
+    <p class="text-right">
+        <a href="/shop/" class="button light">Continue shopping</a>
+    </p>
+{% endblock %}

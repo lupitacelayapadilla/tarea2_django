@@ -1,0 +1,22 @@
+{% extends "shop/base.html" %}
+
+{% block title %}
+    Thank you
+{% endblock %}
+
+{% block content %}
+    {{ids}}
+    <h1>Thank you {{ order.first_name }} {{ order.last_name }}</h1>
+
+    <div class="order-info">
+        <h3>Your order</h3>
+        <ul>
+            {% for item in cart %}
+                <li>{{ item.quantity }}x {{ item.product.name }} <span>${{ item.total_price }}</span></li>
+            {% endfor %}
+        </ul>
+        <p>Refund: ${{ total }}</p>
+    </div>
+
+    <p class="order-form">Your order <strong>{{ order.id }}</strong> has been successfully canceled.</p>
+{% endblock %}
